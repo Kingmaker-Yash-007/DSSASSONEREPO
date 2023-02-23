@@ -29,6 +29,7 @@ public class AudioController {
     public void redirect(HttpServletResponse response) throws IOException, IOException {
         response.sendRedirect("/swagger-ui.html");
     }
+
     // GET endpoint for retrieving a single property of an Audio item
     @GetMapping("/audio/{artistName}/property")
     @ApiOperation(value = "Get a single property of an Audio item", response = String.class)
@@ -60,8 +61,6 @@ public class AudioController {
                 return String.valueOf(audio.getYear());
             case "numreviews":
                 return String.valueOf(audio.getNumReviews());
-            case "numcopiessold":
-                return String.valueOf(totalCopiesSold);
             default:
                 return "Invalid key";
         }
@@ -87,6 +86,12 @@ public class AudioController {
         return new ArrayList<Audio>(audioMap.values());
     }
 
+    // GET endpoint for retrieving the total number of copies sold for all Audio items
+    @GetMapping("/audio/total-copies")
+    @ApiOperation(value = "Get the total number of copies sold for all Audio items", response = Integer.class)
+    public int getTotalCopiesSold() {
+        return totalCopiesSold;
+    }
     // Method to insert seed data
     @PostConstruct
     public void insertSeedData() {
@@ -99,3 +104,4 @@ public class AudioController {
         });
     }
 }
+
